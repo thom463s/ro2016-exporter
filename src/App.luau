@@ -28,6 +28,9 @@ const Section = SectionModule.Section
 
 const e = React.createElement
 
+const VERSION = "v1.0.0"
+const CREATOR = "thom463s"
+
 const SETTINGS_KEY = "RO2016Exporter.Options.v1"
 const THEME_KEY = "RO2016Exporter.Theme.v1"
 const DONE_SOUND = "rbxasset://sounds/electronicpingshort.wav"
@@ -302,6 +305,23 @@ const function SettingsPage(props: SettingsPageProps)
 			size = "Small",
 			width = UDim.new(0, 130),
 			onActivated = props.resetOptions,
+		}),
+
+		About = e(Section, {
+			title = "About",
+			layoutOrder = 5,
+			gap = 2,
+		}, {
+			Creator = e(DetailRow, {
+				layoutOrder = 1,
+				label = "Created by",
+				value = CREATOR,
+			}),
+			Version = e(DetailRow, {
+				layoutOrder = 2,
+				label = "Version",
+				value = VERSION,
+			}),
 		}),
 	})
 end
