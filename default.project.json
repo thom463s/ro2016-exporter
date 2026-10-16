@@ -1,0 +1,10 @@
+{
+  "name": "ro2016-exporter",
+  "tree": {
+    "$path": "src",
+
+    "Packages": {
+      "$path": "Packages"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Project place file
+/ro2016-exporter.rbxlx
+
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+
+sourcemap.json
+Packages/
