@@ -44,35 +44,35 @@ const SIZES = {
 }
 
 type Props = {
-	text: string,
-	variant: ("Primary" | "Secondary" | "Alert" | "Control" | "ToggleOn")?,
-	size: ("XSmall" | "Small" | "Medium" | "Large")?,
-	width: UDim?,
-	disabled: boolean?,
-	layoutOrder: number?,
-	onActivated: (() -> ())?,
+	Text: string,
+	Variant: ("Primary" | "Secondary" | "Alert" | "Control" | "ToggleOn")?,
+	Size: ("XSmall" | "Small" | "Medium" | "Large")?,
+	Width: UDim?,
+	Disabled: boolean?,
+	LayoutOrder: number?,
+	OnActivated: (() -> ())?,
 }
 
 const function Button(props: Props)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	const hovered, setHovered = React.useState(false)
-	const variant = VARIANTS[props.variant or "Primary"]
-	const size = SIZES[props.size or "Medium"]
-	const disabled = props.disabled == true
+	const variant = VARIANTS[props.Variant or "Primary"]
+	const size = SIZES[props.Size or "Medium"]
+	const disabled = props.Disabled == true
 	const showHover = hovered and not disabled
-	const width = props.width or UDim.new(1, 0)
+	const width = props.Width or UDim.new(1, 0)
 
 	return e("TextButton", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.new(width.Scale, width.Offset, 0, size.height),
-		BackgroundColor3 = Color[if showHover then variant.hover else variant.base],
+		BackgroundColor3 = color[if showHover then variant.hover else variant.base],
 		BackgroundTransparency = if disabled then 0.45 else 0,
 		BorderSizePixel = 0,
 		AutoButtonColor = false,
 		Font = Enum.Font.SourceSansSemibold,
-		Text = props.text,
+		Text = props.Text,
 		TextSize = size.text,
-		TextColor3 = Color[variant.text],
+		TextColor3 = color[variant.text],
 		TextTransparency = if disabled then 0.25 else 0,
 
 		[React.Event.MouseEnter] = function()
@@ -82,8 +82,8 @@ const function Button(props: Props)
 			setHovered(false)
 		end,
 		[React.Event.Activated] = function()
-			if not disabled and props.onActivated then
-				props.onActivated()
+			if not disabled and props.OnActivated then
+				props.OnActivated()
 			end
 		end,
 	}, {
@@ -96,7 +96,7 @@ const function Button(props: Props)
 		}),
 		Stroke = variant.stroke and e("UIStroke", {
             ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            Color = Color[if showHover then variant.strokeHover else variant.stroke],
+            Color = color[if showHover then variant.strokeHover else variant.stroke],
         }),
 	})
 end

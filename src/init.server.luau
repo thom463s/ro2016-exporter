@@ -35,7 +35,7 @@ widget:GetPropertyChangedSignal("Enabled"):Connect(function()
     button:SetActive(widget.Enabled)
 end)
 
-const app = React.createElement(App, { plugin = plugin })
+const app = React.createElement(App, { Plugin = plugin })
 const root = ReactRoblox.createRoot(Instance.new("Folder"))
 root:render(ReactRoblox.createPortal(app, widget))
 

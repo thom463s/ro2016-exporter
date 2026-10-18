@@ -14,49 +14,49 @@ const LEVEL_COLORS = {
 }
 
 export type Entry = {
-	level: string,
-	text: string,
-	time: string,
+	Level: string,
+	Text: string,
+	Time: string,
 }
 
 type RowProps = {
-	entry: Entry,
-	layoutOrder: number,
-	first: boolean,
+	Entry: Entry,
+	LayoutOrder: number,
+	First: boolean,
 }
 
 type Props = {
-	entries: { Entry },
-	layoutOrder: number?,
+	Entries: { Entry },
+	LayoutOrder: number?,
 }
 
 const function Row(props: RowProps)
-	const Color = Theme.useColor()
-	const entry = props.entry
+	const color = Theme.useColor()
+	const entry = props.Entry
 
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
 	}, {
-		Divider = not props.first and e("Frame", {
+		Divider = not props.First and e("Frame", {
 			Position = UDim2.fromOffset(0, -ROW_PADDING),
 			Size = UDim2.new(1, 0, 0, 1),
-			BackgroundColor3 = Color.Divider,
+			BackgroundColor3 = color.Divider,
 			BorderSizePixel = 0,
 		}),
 		Padding = e("UIPadding", {
-			PaddingTop = UDim.new(0, if props.first then 0 else ROW_PADDING),
+			PaddingTop = UDim.new(0, if props.First then 0 else ROW_PADDING),
 			PaddingBottom = UDim.new(0, ROW_PADDING),
 		}),
 		Time = e("TextLabel", {
 			Size = UDim2.fromOffset(TEXT_OFFSET - 4, 18),
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Regular,
-			Text = entry.time,
+			Text = entry.Time,
 			TextSize = Theme.TextSize.Small,
-			TextColor3 = Color.TextMuted,
+			TextColor3 = color.TextMuted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 		}),
 		Text = e("TextLabel", {
@@ -65,9 +65,9 @@ const function Row(props: RowProps)
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Regular,
-			Text = entry.text,
+			Text = entry.Text,
 			TextSize = Theme.TextSize.Small,
-			TextColor3 = Color[LEVEL_COLORS[entry.level] or "Text"],
+			TextColor3 = color[LEVEL_COLORS[entry.Level] or "Text"],
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextWrapped = true,
 		}, {
@@ -80,9 +80,9 @@ end
 
 const function LogList(props: Props)
 	const Color = Theme.useColor()
-	if #props.entries == 0 then
+	if #props.Entries == 0 then
 		return e("TextLabel", {
-			LayoutOrder = props.layoutOrder,
+			LayoutOrder = props.LayoutOrder,
 			Size = UDim2.new(1, 0, 0, 20),
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Regular,
@@ -99,17 +99,17 @@ const function LogList(props: Props)
 		}),
 	}
 	
-	const count = #props.entries
-	for index, entry in props.entries do
+	const count = #props.Entries
+	for index, entry in props.Entries do
 		rows[`Entry{index}`] = e(Row, {
-			entry = entry,
-			layoutOrder = count - index,
-			first = index == count,
+			Entry = entry,
+			LayoutOrder = count - index,
+			First = index == count,
 		})
 	end
 
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,

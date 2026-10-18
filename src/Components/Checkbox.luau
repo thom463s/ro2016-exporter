@@ -9,36 +9,36 @@ const CHECKMARK_ID = "rbxassetid://87225501648406"
 const BOX_SIZE = 16
 
 type Props = {
-	checked: boolean,
-	onChange: (boolean) -> (),
-	label: string,
-	description: string?,
-	disabled: boolean?,
-	layoutOrder: number?,
+	Checked: boolean,
+	OnChange: (boolean) -> (),
+	Label: string,
+	Description: string?,
+	Disabled: boolean?,
+	LayoutOrder: number?,
 }
 
 const function Tick()
-    const Color = Theme.useColor()
+    const color = Theme.useColor()
     return e("ImageLabel", {
         AnchorPoint = Vector2.new(0.5, 0.5),
         Position = UDim2.fromScale(0.5, 0.5),
         Size = UDim2.fromOffset(BOX_SIZE, BOX_SIZE),
         BackgroundTransparency = 1,
         Image = CHECKMARK_ID,
-        ImageColor3 = Color.White,
+        ImageColor3 = color.White,
     })
 end
 
 const function Checkbox(props: Props)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	const hovered, setHovered = React.useState(false)
-	const checked = props.checked
-	const disabled = props.disabled == true
+	const checked = props.Checked
+	const disabled = props.Disabled == true
 	const showHover = hovered and not disabled
-	const borderColor = if checked or showHover then Color.Blue else Color.Border
+	const borderColor = if checked or showHover then color.Blue else color.Border
 
 	return e("TextButton", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
@@ -53,14 +53,14 @@ const function Checkbox(props: Props)
 		end,
 		[React.Event.Activated] = function()
 			if not disabled then
-				props.onChange(not checked)
+				props.OnChange(not checked)
 			end
 		end,
 	}, {
 		Box = e("Frame", {
 			Position = UDim2.fromOffset(0, 2),
 			Size = UDim2.fromOffset(BOX_SIZE, BOX_SIZE),
-			BackgroundColor3 = if checked then Color.Blue else Color.Panel,
+			BackgroundColor3 = if checked then color.Blue else color.Panel,
 			BackgroundTransparency = if disabled then 0.5 else 0,
 			BorderSizePixel = 0,
 		}, {
@@ -74,10 +74,10 @@ const function Checkbox(props: Props)
 			Tick = checked and e(Tick),
 		}),
 		Label = e(Label, {
-			text = props.label,
-			description = props.description,
-			disabled = disabled,
-			leftInset = BOX_SIZE + 10,
+			Text = props.Label,
+			Description = props.Description,
+			Disabled = disabled,
+			LeftInset = BOX_SIZE + 10,
 		}),
 	})
 end

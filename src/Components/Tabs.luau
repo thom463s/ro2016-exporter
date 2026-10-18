@@ -5,42 +5,42 @@ const Theme = require(Plugin.Theme)
 const e = React.createElement
 
 type TabSpec = {
-	id: string,
-	label: string,
+	Id: string,
+	Label: string,
 }
 
 type TabProps = {
-	label: string,
-	active: boolean,
-	count: number,
-	layoutOrder: number,
-	onActivated: () -> (),
+	Label: string,
+	Active: boolean,
+	Count: number,
+	LayoutOrder: number,
+	OnActivated: () -> (),
 }
 
 type Props = {
-	tabs: { TabSpec },
-	current: string,
-	onSelect: (string) -> (),
-	position: UDim2,
-	height: number,
+	Tabs: { TabSpec },
+	Current: string,
+	OnSelect: (string) -> (),
+	Position: UDim2,
+	Height: number,
 }
 
 const function Tab(props: TabProps)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	const hovered, setHovered = React.useState(false)
-	const active = props.active
+	const active = props.Active
 	const highlighted = active or hovered
 
 	return e("TextButton", {
-		LayoutOrder = props.layoutOrder,
-		Size = UDim2.fromScale(1 / props.count, 1),
+		LayoutOrder = props.LayoutOrder,
+		Size = UDim2.fromScale(1 / props.Count, 1),
 		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		AutoButtonColor = false,
 		Font = Theme.Font.Semibold,
-		Text = props.label,
+		Text = props.Label,
 		TextSize = Theme.TextSize.Title,
-		TextColor3 = if highlighted then Color.Text else Color.TextMuted,
+		TextColor3 = if highlighted then color.Text else color.TextMuted,
 
 		[React.Event.MouseEnter] = function()
 			setHovered(true)
@@ -48,13 +48,13 @@ const function Tab(props: TabProps)
 		[React.Event.MouseLeave] = function()
 			setHovered(false)
 		end,
-		[React.Event.Activated] = props.onActivated,
+		[React.Event.Activated] = props.OnActivated,
 	}, {
 		Underline = highlighted and e("Frame", {
 			AnchorPoint = Vector2.new(0, 1),
 			Position = UDim2.fromScale(0, 1),
 			Size = UDim2.new(1, 0, 0, 4),
-			BackgroundColor3 = if active then Color.Blue else Color.Divider,
+			BackgroundColor3 = if active then color.Blue else color.Divider,
 			BorderSizePixel = 0,
 		}),
 	})
@@ -62,7 +62,7 @@ end
 
 const function Tabs(props: Props)
 	const Color = Theme.useColor()
-	const tabCount = #props.tabs
+	const tabCount = #props.Tabs
 
 	const children = {
 		Layout = e("UIListLayout", {
@@ -77,21 +77,21 @@ const function Tabs(props: Props)
 		}),
 	}
 
-	for index, tab in props.tabs do
-		children[tab.id] = e(Tab, {
-			layoutOrder = index,
-			count = tabCount,
-			label = tab.label,
-			active = tab.id == props.current,
-			onActivated = function()
-				props.onSelect(tab.id)
+	for index, tab in props.Tabs do
+		children[tab.Id] = e(Tab, {
+			LayoutOrder = index,
+			Count = tabCount,
+			Label = tab.Label,
+			Active = tab.Id == props.Current,
+			OnActivated = function()
+				props.OnSelect(tab.Id)
 			end,
 		})
 	end
 
 	return e("Frame", {
-		Position = props.position,
-		Size = UDim2.new(1, 0, 0, props.height),
+		Position = props.Position,
+		Size = UDim2.new(1, 0, 0, props.Height),
 		BackgroundColor3 = Color.Panel,
 		BorderSizePixel = 0,
 		ZIndex = 2,

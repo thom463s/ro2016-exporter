@@ -5,15 +5,15 @@ const Theme = require(Plugin.Theme)
 const e = React.createElement
 
 type Props = {
-	title: string,
-	height: number,
+	Title: string,
+	Height: number,
 }
 
 const function Header(props: Props)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	return e("Frame", {
-		Size = UDim2.new(1, 0, 0, props.height),
-		BackgroundColor3 = Color.Header,
+		Size = UDim2.new(1, 0, 0, props.Height),
+		BackgroundColor3 = color.Header,
 		BorderSizePixel = 0,
 	}, {
 		Padding = e("UIPadding", {
@@ -24,9 +24,9 @@ const function Header(props: Props)
 			Size = UDim2.fromScale(1, 1),
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Bold,
-			Text = props.title,
+			Text = props.Title,
 			TextSize = Theme.TextSize.Heading,
-			TextColor3 = Color.White,
+			TextColor3 = color.White,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
 		}),

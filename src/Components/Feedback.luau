@@ -12,33 +12,33 @@ const BANNER_COLORS = {
 }
 
 type BannerProps = {
-	kind: "Success" | "Error" | "Info" | "Warning",
-	text: string,
-	position: UDim2,
-	onDismiss: () -> (),
+	Kind: "Success" | "Error" | "Info" | "Warning",
+	Text: string,
+	Position: UDim2,
+	OnDismiss: () -> (),
 }
 
 type ProgressBarProps = {
-	progress: number,
-	layoutOrder: number?,
+	Progress: number,
+	LayoutOrder: number?,
 }
 
 const function Banner(props: BannerProps)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	return e("TextButton", {
-		Position = props.position,
+		Position = props.Position,
 		Size = UDim2.new(1, 0, 0, 34),
-		BackgroundColor3 = Color[BANNER_COLORS[props.kind] or "Blue"],
+		BackgroundColor3 = color[BANNER_COLORS[props.Kind] or "Blue"],
 		BorderSizePixel = 0,
 		AutoButtonColor = false,
 		Font = Theme.Font.Semibold,
-		Text = props.text,
+		Text = props.Text,
 		TextSize = Theme.TextSize.Body,
-		TextColor3 = Color.White,
+		TextColor3 = color.White,
 		TextTruncate = Enum.TextTruncate.AtEnd,
 		ZIndex = 10,
 
-		[React.Event.Activated] = props.onDismiss,
+		[React.Event.Activated] = props.OnDismiss,
 	}, {
 		Padding = e("UIPadding", {
 			PaddingLeft = UDim.new(0, Theme.Padding),
@@ -48,11 +48,11 @@ const function Banner(props: BannerProps)
 end
 
 const function ProgressBar(props: ProgressBarProps)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.new(1, 0, 0, 6),
-		BackgroundColor3 = Color.Divider,
+		BackgroundColor3 = color.Divider,
 		BorderSizePixel = 0,
 		ClipsDescendants = true,
 	}, {
@@ -60,8 +60,8 @@ const function ProgressBar(props: ProgressBarProps)
 			CornerRadius = UDim.new(1, 0)
 		}),
 		Fill = e("Frame", {
-			Size = UDim2.fromScale(math.clamp(props.progress, 0, 1), 1),
-			BackgroundColor3 = Color.Blue,
+			Size = UDim2.fromScale(math.clamp(props.Progress, 0, 1), 1),
+			BackgroundColor3 = color.Blue,
 			BorderSizePixel = 0,
 		}, {
 			Corner = e("UICorner", {

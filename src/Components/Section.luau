@@ -10,39 +10,39 @@ const ACTION_GAP = 8
 const DETAIL_LABEL_WIDTH = 90
 
 type Action = {
-	text: string,
-	width: number?,
-	disabled: boolean?,
-	onActivated: () -> (),
+	Text: string,
+	Width: number?,
+	Disabled: boolean?,
+	OnActivated: () -> (),
 }
 
 type SectionProps = {
-	title: string,
-	action: Action?,
-	layoutOrder: number?,
-	gap: number?,
+	Title: string,
+	Action: Action?,
+	LayoutOrder: number?,
+	Gap: number?,
 	children: any,
 }
 
 type DividerProps = {
-	layoutOrder: number?,
+	LayoutOrder: number?,
 }
 
 type DetailRowProps = {
-	label: string,
-	value: string,
-	valueColor: Color3?,
-	layoutOrder: number?,
+	Label: string,
+	Value: string,
+	ValueColor: Color3?,
+	LayoutOrder: number?,
 }
 
 const function Section(props: SectionProps)
-	const Color = Theme.useColor()
-	const action = props.action
-	const actionWidth = if action then action.width or ACTION_WIDTH else 0
+	const color = Theme.useColor()
+	const action = props.Action
+	const actionWidth = if action then action.Width or ACTION_WIDTH else 0
 	const titleInset = if action then actionWidth + ACTION_GAP else 0
 
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
@@ -60,9 +60,9 @@ const function Section(props: SectionProps)
 				Size = UDim2.new(1, -titleInset, 1, 0),
 				BackgroundTransparency = 1,
 				Font = Theme.Font.Light,
-				Text = props.title,
+				Text = props.Title,
 				TextSize = Theme.TextSize.Section,
-				TextColor3 = Color.Text,
+				TextColor3 = color.Text,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				TextTruncate = Enum.TextTruncate.AtEnd,
 			}),
@@ -73,11 +73,11 @@ const function Section(props: SectionProps)
 				BackgroundTransparency = 1,
 			}, {
 				Button = e(Button, {
-					text = action.text,
-					variant = "Secondary",
-					size = "XSmall",
-					disabled = action.disabled,
-					onActivated = action.onActivated,
+					Text = action.Text,
+					Variant = "Secondary",
+					Size = "XSmall",
+					Disabled = action.Disabled,
+					OnActivated = action.OnActivated,
 				}),
 			}),
 		}),
@@ -85,11 +85,11 @@ const function Section(props: SectionProps)
 			LayoutOrder = 2,
 			Size = UDim2.fromScale(1, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
-			BackgroundColor3 = Color.Panel,
+			BackgroundColor3 = color.Panel,
 			BorderSizePixel = 0,
 		}, {
 			Shadow = e("UIShadow", {
-				Color = Color.Shadow,
+				Color = color.Shadow,
 				Transparency = 0.8,
 				Offset = UDim2.fromOffset(0, 1),
 				BlurRadius = UDim.new(0, 4),
@@ -102,7 +102,7 @@ const function Section(props: SectionProps)
 			}),
 			Layout = e("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, props.gap or 12),
+				Padding = UDim.new(0, props.Gap or 12),
 			}),
 			Children = e(React.Fragment, nil, props.children),
 		}),
@@ -110,19 +110,19 @@ const function Section(props: SectionProps)
 end
 
 const function Divider(props: DividerProps)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.new(1, 0, 0, 1),
-		BackgroundColor3 = Color.Divider,
+		BackgroundColor3 = color.Divider,
 		BorderSizePixel = 0,
 	})
 end
 
 const function DetailRow(props: DetailRowProps)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.new(1, 0, 0, 20),
 		BackgroundTransparency = 1,
 	}, {
@@ -130,9 +130,9 @@ const function DetailRow(props: DetailRowProps)
 			Size = UDim2.new(0, DETAIL_LABEL_WIDTH, 1, 0),
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Regular,
-			Text = props.label,
+			Text = props.Label,
 			TextSize = Theme.TextSize.Body,
-			TextColor3 = Color.TextMuted,
+			TextColor3 = color.TextMuted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 		}),
 		Value = e("TextLabel", {
@@ -140,9 +140,9 @@ const function DetailRow(props: DetailRowProps)
 			Size = UDim2.new(1, -DETAIL_LABEL_WIDTH, 1, 0),
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Regular,
-			Text = props.value,
+			Text = props.Value,
 			TextSize = Theme.TextSize.Body,
-			TextColor3 = props.valueColor or Color.Text,
+			TextColor3 = props.ValueColor or color.Text,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
 		}),

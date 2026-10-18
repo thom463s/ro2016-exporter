@@ -47,15 +47,15 @@ const NO_TARGET_TEXT = "No model set. Select one in the Explorer and press Get S
 const CLASS_CHECK_TEXT = "Creates every class in Data/Classes and reads each property. Anything this Studio doesn't recognise goes in the Log."
 
 const TABS = {
-	{ id = "export", label = "Export" },
-	{ id = "settings", label = "Settings" },
-	{ id = "log", label = "Log" },
+	{ Id = "export", Label = "Export" },
+	{ Id = "settings", Label = "Settings" },
+	{ Id = "log", Label = "Log" },
 }
 
 const THEME_MODES = {
-	{ id = "Auto", label = "Studio" },
-	{ id = "Light", label = "Light" },
-	{ id = "Dark", label = "Dark" },
+	{ Id = "Auto", Label = "Studio" },
+	{ Id = "Light", Label = "Light" },
+	{ Id = "Dark", Label = "Dark" },
 }
 
 type LogEntry = LogList.Entry
@@ -70,33 +70,33 @@ type ExportResult = {
 }
 
 type BannerState = {
-	kind: "Success" | "Warning" | "Error",
-	text: string,
+	Kind: "Success" | "Warning" | "Error",
+	Text: string,
 }
 
 type ExportPageProps = {
-	target: Instance?,
-	selected: Instance?,
-	lastResult: ExportResult?,
-	pickSelection: () -> (),
+	Target: Instance?,
+	Selected: Instance?,
+	LastResult: ExportResult?,
+	PickSelection: () -> (),
 }
 
 type SettingsPageProps = {
-	options: { [string]: any },
-	setOption: (string, any) -> (),
-	themeMode: Theme.Mode,
-	setThemeMode: (Theme.Mode) -> (),
-	resetOptions: () -> (),
-	checkClasses: () -> (),
+	Options: { [string]: any },
+	SetOption: (string, any) -> (),
+	ThemeMode: Theme.Mode,
+	SetThemeMode: (Theme.Mode) -> (),
+	ResetOptions: () -> (),
+	CheckClasses: () -> (),
 }
 
 type LogPageProps = {
-	log: { LogEntry },
-	clearLog: () -> (),
+	Log: { LogEntry },
+	ClearLog: () -> (),
 }
 
 type Props = {
-	plugin: Plugin,
+	Plugin: Plugin,
 }
 
 const function loadOptions(plugin: Plugin)
@@ -135,23 +135,23 @@ const function playDoneSound()
 end
 
 type SmallTextProps = {
-	text: string,
-	color: Color3?,
-	layoutOrder: number,
+	Text: string,
+	Color: Color3?,
+	LayoutOrder: number,
 }
 
 const function SmallText(props: SmallTextProps)
 	const Color = Theme.useColor()
 
 	return e("TextLabel", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
 		Font = Theme.Font.Regular,
-		Text = props.text,
+		Text = props.Text,
 		TextSize = 14,
-		TextColor3 = props.color or Color.TextMuted,
+		TextColor3 = props.Color or Color.TextMuted,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextWrapped = true,
 	})
@@ -159,77 +159,77 @@ end
 
 const function ExportPage(props: ExportPageProps)
 	const Color = Theme.useColor()
-	const target = props.target
-	const selected = props.selected
-	const lastResult = props.lastResult
+	const target = props.Target
+	const selected = props.Selected
+	const lastResult = props.LastResult
 	const sameAsSelection = selected ~= nil and selected == target
 
 	return e(React.Fragment, nil, {
 		Target = e(Section, {
-			title = "Model",
-			layoutOrder = 1,
-			action = {
-				text = "Get Selection",
-				width = 100,
-				disabled = selected == nil or sameAsSelection,
-				onActivated = props.pickSelection,
+			Title = "Model",
+			LayoutOrder = 1,
+			Action = {
+				Text = "Get Selection",
+				Width = 100,
+				Disabled = selected == nil or sameAsSelection,
+				OnActivated = props.PickSelection,
 			},
 		}, {
 			Card = e(SelectionCard, {
-				layoutOrder = 1,
-				instance = target,
-				emptyText = NO_TARGET_TEXT,
+				LayoutOrder = 1,
+				Instance = target,
+				EmptyText = NO_TARGET_TEXT,
 			}),
 		}),
 
 		Output = e(Section, {
-			title = "Output",
-			layoutOrder = 2,
-			gap = 6,
+			Title = "Output",
+			LayoutOrder = 2,
+			Gap = 6,
 		}, {
 			Where = if lastResult
-				then e(SmallText, { layoutOrder = 1, text = `Saved to {lastResult.path}`, color = Color.Text })
-				else e(SmallText, { layoutOrder = 1, text = "Nothing exported yet." }),
-			Paste = e(SmallText, { layoutOrder = 2, text = "Copy each value in order into the RO2016 Importer." }),
+				then e(SmallText, { LayoutOrder = 1, Text = `Saved to {lastResult.path}`, Color = Color.Text })
+				else e(SmallText, { LayoutOrder = 1, Text = "Nothing exported yet." }),
+			Paste = e(SmallText, { LayoutOrder = 2, Text = "Copy each value in order into the RO2016 Importer." }),
 		}),
 
 		Last = lastResult and e(Section, {
-			title = "Last Export",
-			layoutOrder = 3,
-			gap = 2,
+			Title = "Last Export",
+			LayoutOrder = 3,
+			Gap = 2,
 		}, {
 			Instances = e(DetailRow, {
-				layoutOrder = 1,
-				label = "Instances",
-				value = Format.number(lastResult.instances),
+				LayoutOrder = 1,
+				Label = "Instances",
+				Value = Format.number(lastResult.instances),
 			}),
 			Values = e(DetailRow, {
-				layoutOrder = 2,
-				label = "Values",
-				value = Format.number(lastResult.chunks),
+				LayoutOrder = 2,
+				Label = "Values",
+				Value = Format.number(lastResult.chunks),
 			}),
 			Strings = e(DetailRow, {
-				layoutOrder = 3,
-				label = "Strings",
-				value = Format.number(lastResult.strings),
+				LayoutOrder = 3,
+				Label = "Strings",
+				Value = Format.number(lastResult.strings),
 			}),
 			Characters = e(DetailRow, {
-				layoutOrder = 4,
-				label = "Characters",
-				value = Format.number(lastResult.characters),
+				LayoutOrder = 4,
+				Label = "Characters",
+				Value = Format.number(lastResult.characters),
 			}),
 			Time = e(DetailRow, {
-				layoutOrder = 5,
-				label = "Time",
-				value = string.format("%.2f seconds", lastResult.seconds),
+				LayoutOrder = 5,
+				Label = "Time",
+				Value = string.format("%.2f seconds", lastResult.seconds),
 			}),
 		}),
 	})
 end
 
 const function SettingsPage(props: SettingsPageProps)
-	const options = props.options
-	const setOption = props.setOption
+	const options = props.Options
+	const setOption = props.SetOption
 
 	const function bindOption(key: string)
 		return function(value: boolean)
@@ -239,88 +239,88 @@ const function SettingsPage(props: SettingsPageProps)
 
 	return e(React.Fragment, nil, {
 		Export = e(Section, {
-			title = "Export Settings",
-			layoutOrder = 1,
+			Title = "Export Settings",
+			LayoutOrder = 1,
 		}, {
 			Names = e(Checkbox, {
-				layoutOrder = 1,
-				label = "Import names",
-				description = "Keep every instance's Name. Makes the output a lot bigger.",
-				checked = options.processNames,
-				onChange = bindOption("processNames"),
+				LayoutOrder = 1,
+				Label = "Import names",
+				Description = "Keep every instance's Name. Makes the output a lot bigger.",
+				Checked = options.processNames,
+				OnChange = bindOption("processNames"),
 			}),
 			Strings = e(Checkbox, {
-				layoutOrder = 2,
-				label = "Import strings",
-				description = "Keep string properties like Text and StringValue.Value.",
-				checked = options.processStrings,
-				onChange = bindOption("processStrings"),
+				LayoutOrder = 2,
+				Label = "Import strings",
+				Description = "Keep string properties like Text and StringValue.Value.",
+				Checked = options.processStrings,
+				OnChange = bindOption("processStrings"),
 			}),
 			Anchor = e(Checkbox, {
-				layoutOrder = 3,
-				label = "Anchor parts",
-				description = "Export every part as anchored. Your model isn't changed.",
-				checked = options.anchorParts,
-				onChange = bindOption("anchorParts"),
+				LayoutOrder = 3,
+				Label = "Anchor parts",
+				Description = "Export every part as anchored. Your model isn't changed.",
+				Checked = options.anchorParts,
+				OnChange = bindOption("anchorParts"),
 			}),
 			Debug = e(Checkbox, {
-				layoutOrder = 4,
-				label = "Debug table",
-				description = "Label every value with its property name. The importer can't read this.",
-				checked = options.debugTable,
-				onChange = bindOption("debugTable"),
+				LayoutOrder = 4,
+				Label = "Debug table",
+				Description = "Label every value with its property name. The importer can't read this.",
+				Checked = options.debugTable,
+				OnChange = bindOption("debugTable"),
 			}),
 		}),
 
 		Appearance = e(Section, {
-			title = "Theme",
-			layoutOrder = 2,
-			gap = 8,
+			Title = "Theme",
+			LayoutOrder = 2,
+			Gap = 8,
 		}, {
 			Modes = e(Segmented, {
-				layoutOrder = 1,
-				options = THEME_MODES,
-				selected = props.themeMode,
-				onSelect = props.setThemeMode,
+				LayoutOrder = 1,
+				Options = THEME_MODES,
+				Selected = props.ThemeMode,
+				OnSelect = props.SetThemeMode,
 			}),
-			Text = e(SmallText, { layoutOrder = 2, text = "Studio follows the theme set in Studio's settings." }),
+			Text = e(SmallText, { LayoutOrder = 2, Text = "Studio follows the theme set in Studio's settings." }),
 		}),
 
 		Classes = e(Section, {
-			title = "Class Table",
-			layoutOrder = 3,
-			action = {
-				text = "Check",
-				width = 70,
-				onActivated = props.checkClasses,
+			Title = "Class Table",
+			LayoutOrder = 3,
+			Action = {
+				Text = "Check",
+				Width = 70,
+				OnActivated = props.CheckClasses,
 			},
 		}, {
-			Text = e(SmallText, { layoutOrder = 1, text = CLASS_CHECK_TEXT }),
+			Text = e(SmallText, { LayoutOrder = 1, Text = CLASS_CHECK_TEXT }),
 		}),
 
 		Reset = e(Button, {
-			layoutOrder = 4,
-			text = "Reset Settings",
-			variant = "Control",
-			size = "Small",
-			width = UDim.new(0, 130),
-			onActivated = props.resetOptions,
+			LayoutOrder = 4,
+			Text = "Reset Settings",
+			Variant = "Control",
+			Size = "Small",
+			Width = UDim.new(0, 130),
+			OnActivated = props.ResetOptions,
 		}),
 
 		About = e(Section, {
-			title = "About",
-			layoutOrder = 5,
-			gap = 2,
+			Title = "About",
+			LayoutOrder = 5,
+			Gap = 2,
 		}, {
 			Creator = e(DetailRow, {
-				layoutOrder = 1,
-				label = "Created by",
-				value = CREATOR,
+				LayoutOrder = 1,
+				Label = "Created by",
+				Value = CREATOR,
 			}),
 			Version = e(DetailRow, {
-				layoutOrder = 2,
-				label = "Version",
-				value = VERSION,
+				LayoutOrder = 2,
+				Label = "Version",
+				Value = VERSION,
 			}),
 		}),
 	})
@@ -328,26 +328,26 @@ end
 
 const function LogPage(props: LogPageProps)
 	return e(Section, {
-		title = "Log",
-		layoutOrder = 1,
-		gap = 0,
-		action = if #props.log > 0
+		Title = "Log",
+		LayoutOrder = 1,
+		Gap = 0,
+		Action = if #props.Log > 0
 			then {
-				text = "Clear",
-				width = 60,
-				onActivated = props.clearLog,
+				Text = "Clear",
+				Width = 60,
+				OnActivated = props.ClearLog,
 			}
 			else nil,
 	}, {
 		List = e(LogList, {
-			entries = props.log,
-			layoutOrder = 1,
+			Entries = props.Log,
+			LayoutOrder = 1,
 		}),
 	})
 end
 
 const function App(props: Props)
-	const plugin = props.plugin
+	const plugin = props.Plugin
 	const selected = useSelection()
 
 	const options, setOptions = React.useState(function()
@@ -416,9 +416,9 @@ const function App(props: Props)
 		setLog(function(previous)
 			const nextLog = table.clone(previous)
 			table.insert(nextLog, {
-				level = level,
-				text = text,
-				time = os.date("%H:%M:%S"),
+				Level = level,
+				Text = text,
+				Time = os.date("%H:%M:%S"),
 			})
 
 			while #nextLog > MAX_LOG_ENTRIES do
@@ -477,11 +477,11 @@ const function App(props: Props)
 					)
 				end
 
-				setBanner({ kind = "Success", text = `Saved data to {path}!` })
+				setBanner({ Kind = "Success", Text = `Saved data to {path}!` })
 				playDoneSound()
 			else
 				addLog("error", tostring(result))
-				setBanner({ kind = "Error", text = "Export failed. See the Log tab." })
+				setBanner({ Kind = "Error", Text = "Export failed. See the Log tab." })
 			end
 		end)
 	end
@@ -489,44 +489,44 @@ const function App(props: Props)
 	local page
 	if tab == "export" then
 		page = e(ExportPage, {
-			target = target,
-			selected = selected,
-			lastResult = lastResult,
+			Target = target,
+			Selected = selected,
+			LastResult = lastResult,
 			
-			pickSelection = function()
+			PickSelection = function()
 				setTarget(selected)
 			end,
 		})
 	elseif tab == "settings" then
 		page = e(SettingsPage, {
-			options = options,
-			setOption = setOption,
-			themeMode = themeMode,
-			setThemeMode = setThemeMode,
-			resetOptions = function()
+			Options = options,
+			SetOption = setOption,
+			ThemeMode = themeMode,
+			SetThemeMode = setThemeMode,
+			ResetOptions = function()
 				setOptions(table.clone(Exporter.DEFAULT_OPTIONS))
 				setThemeMode("Auto")
 			end,
-			checkClasses = function()
+			CheckClasses = function()
 				const problems = Exporter.checkClasses()
 				if #problems == 0 then
 					addLog("success", "Class table OK: every class and property was found.")
-					setBanner({ kind = "Success", text = "Class table OK" })
+					setBanner({ Kind = "Success", Text = "Class table OK" })
 				else
 					for _, problem in problems do
 						addLog("warning", problem)
 					end
 					setBanner({
-						kind = "Warning",
-						text = `{#problems} class table issue(s). See the Log.`,
+						Kind = "Warning",
+						Text = `{#problems} class table issue(s). See the Log.`,
 					})
 				end
 			end,
 		})
 	else
 		page = e(LogPage, {
-			log = log,
-			clearLog = function()
+			Log = log,
+			ClearLog = function()
 				setLog({})
 			end,
 		})
@@ -544,23 +544,24 @@ const function App(props: Props)
 			BorderSizePixel = 0,
 		}, {
 			Header = e(Header, {
-				title = "RO2016 Exporter",
-				height = HEADER_HEIGHT,
+				Title = "RO2016 Exporter",
+				Height = HEADER_HEIGHT,
 			}),
 
 			Tabs = e(Tabs, {
-				tabs = TABS,
-				current = tab,
-				onSelect = setTab,
-				position = UDim2.fromOffset(0, HEADER_HEIGHT),
-				height = TABS_HEIGHT,
+				Tabs = TABS,
+				Current = tab,
+				OnSelect = setTab,
+				Position = UDim2.fromOffset(0, HEADER_HEIGHT),
+				Height = TABS_HEIGHT,
 			}),
 
 			Banner = banner and e(Banner, {
-				kind = banner.kind,
-				text = banner.text,
-				position = UDim2.fromOffset(0, BODY_TOP),
-				onDismiss = function()
+				Kind = banner.Kind,
+				Text = banner.Text,
+				Position = UDim2.fromOffset(0, BODY_TOP),
+
+				OnDismiss = function()
 					setBanner(nil)
 				end,
 			}),
@@ -613,7 +614,7 @@ const function App(props: Props)
 					BackgroundTransparency = 1,
 				}, {
 					Bar = e(ProgressBar, {
-						progress = progress
+						Progress = progress
 					}),
 				}),
 				Action = e("Frame", {
@@ -623,11 +624,11 @@ const function App(props: Props)
 					BackgroundTransparency = 1,
 				}, {
 					Button = e(Button, {
-						text = buttonText,
-						variant = "Primary",
-						size = "Large",
-						disabled = busy or target == nil,
-						onActivated = runExport,
+						Text = buttonText,
+						Variant = "Primary",
+						Size = "Large",
+						Disabled = busy or target == nil,
+						OnActivated = runExport,
 					}),
 				}),
 			}),

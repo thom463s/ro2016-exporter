@@ -5,23 +5,23 @@ const Theme = require(Plugin.Theme)
 const e = React.createElement
 
 type Props = {
-	text: string?,
-	description: string?,
-	bold: boolean?,
-	disabled: boolean?,
-	textSize: number?,
-	leftInset: number?,
-	rightInset: number?,
-	layoutOrder: number?,
+	Text: string?,
+	Description: string?,
+	Bold: boolean?,
+	Disabled: boolean?,
+	TextSize: number?,
+	LeftInset: number?,
+	RightInset: number?,
+	LayoutOrder: number?,
 }
 
 const function Label(props: Props)
-	const Color = Theme.useColor()
-	const leftInset = props.leftInset or 0
-	const rightInset = props.rightInset or 0
+	const color = Theme.useColor()
+	const leftInset = props.LeftInset or 0
+	const rightInset = props.RightInset or 0
 
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Position = UDim2.fromOffset(leftInset, 0),
 		Size = UDim2.new(1, -(leftInset + rightInset), 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
@@ -36,22 +36,22 @@ const function Label(props: Props)
 			Size = UDim2.fromScale(1, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
-			Font = if props.bold then Theme.Font.Semibold else Theme.Font.Regular,
-			Text = props.text or "",
-			TextSize = props.textSize or Theme.TextSize.Body,
-			TextColor3 = if props.disabled then Color.Placeholder else Color.Text,
+			Font = if props.Bold then Theme.Font.Semibold else Theme.Font.Regular,
+			Text = props.Text or "",
+			TextSize = props.TextSize or Theme.TextSize.Body,
+			TextColor3 = if props.Disabled then color.Placeholder else color.Text,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextWrapped = true,
 		}),
-		Description = props.description and e("TextLabel", {
+		Description = props.Description and e("TextLabel", {
 			LayoutOrder = 2,
 			Size = UDim2.fromScale(1, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Regular,
-			Text = props.description,
+			Text = props.Description,
 			TextSize = Theme.TextSize.Small,
-			TextColor3 = Color.TextMuted,
+			TextColor3 = color.TextMuted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextWrapped = true,
 		}),

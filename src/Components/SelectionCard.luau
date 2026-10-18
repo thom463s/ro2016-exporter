@@ -6,7 +6,6 @@ const Section = require(script.Parent.Section)
 const Theme = require(Plugin.Theme)
 
 const DetailRow = Section.DetailRow
-
 const e = React.createElement
 
 const ICON_SIZE = 16
@@ -15,10 +14,10 @@ const ICONS_PER_ROW = SHEET_WIDTH // Icons.Size
 const DEFAULT_EMPTY_TEXT = "Nothing selected. Pick a Model, Part or Folder in the Explorer."
 
 type Props = {
-	instance: Instance?,
-	count: number?,
-	emptyText: string?,
-	layoutOrder: number?,
+	Instance: Instance?,
+	Count: number?,
+	EmptyText: string?,
+	LayoutOrder: number?,
 }
 
 const function classIcon(className: string)
@@ -35,9 +34,9 @@ const function classIcon(className: string)
 end
 
 const function SelectionCard(props: Props)
-	const Color = Theme.useColor()
-	const instance = props.instance
-	const count = props.count or 1
+	const color = Theme.useColor()
+	const instance = props.Instance
+	const count = props.Count or 1
 
 	const descendantCount = React.useMemo(function()
 		if instance == nil then
@@ -50,14 +49,14 @@ const function SelectionCard(props: Props)
 
 	if instance == nil then
 		return e("TextLabel", {
-			LayoutOrder = props.layoutOrder,
+			LayoutOrder = props.LayoutOrder,
 			Size = UDim2.fromScale(1, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Regular,
-			Text = props.emptyText or DEFAULT_EMPTY_TEXT,
+			Text = props.EmptyText or DEFAULT_EMPTY_TEXT,
 			TextSize = Theme.TextSize.Body,
-			TextColor3 = Color.TextMuted,
+			TextColor3 = color.TextMuted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextWrapped = true,
 		})
@@ -67,7 +66,7 @@ const function SelectionCard(props: Props)
 	const nameInset = ICON_SIZE + 6
 
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
@@ -99,27 +98,27 @@ const function SelectionCard(props: Props)
 				Font = Theme.Font.Semibold,
 				Text = instance.Name,
 				TextSize = Theme.TextSize.Title,
-				TextColor3 = Color.Text,
+				TextColor3 = color.Text,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				TextTruncate = Enum.TextTruncate.AtEnd,
 			}),
 		}),
 
 		Class = e(DetailRow, {
-			layoutOrder = 2,
-			label = "Class",
-			value = instance.ClassName,
+			LayoutOrder = 2,
+			Label = "Class",
+			Value = instance.ClassName,
 		}),
 		Descendants = e(DetailRow, {
-			layoutOrder = 3,
-			label = "Descendants",
-			value = Format.number(descendantCount),
+			LayoutOrder = 3,
+			Label = "Descendants",
+			Value = Format.number(descendantCount),
 		}),
 		Path = e(DetailRow, {
-			layoutOrder = 4,
-			label = "Path",
-			value = instance:GetFullName(),
-			valueColor = Color.BlueText,
+			LayoutOrder = 4,
+			Label = "Path",
+			Value = instance:GetFullName(),
+			ValueColor = color.BlueText,
 		}),
 
 		Multi = count > 1 and e("TextLabel", {
@@ -130,7 +129,7 @@ const function SelectionCard(props: Props)
 			Font = Theme.Font.Semibold,
 			Text = `Only the first of {count} selected instances is exported.`,
 			TextSize = 13,
-			TextColor3 = Color.OrangeText,
+			TextColor3 = color.OrangeText,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextWrapped = true,
 		}),

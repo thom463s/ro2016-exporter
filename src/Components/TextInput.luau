@@ -5,27 +5,27 @@ const Theme = require(Plugin.Theme)
 const e = React.createElement
 
 type Props = {
-	text: string,
-	label: string?,
-	hint: string?,
-	placeholder: string?,
-	onChange: ((string) -> ())?,
-	onCommit: ((string) -> string?)?,
-	layoutOrder: number?,
+	Text: string,
+	Label: string?,
+	Hint: string?,
+	Placeholder: string?,
+	OnChange: ((string) -> ())?,
+	OnCommit: ((string) -> string?)?,
+	LayoutOrder: number?,
 }
 
 const function TextInput(props: Props)
-	const Color = Theme.useColor()
+	const color = Theme.useColor()
 	const focused, setFocused = React.useState(false)
 	const hovered, setHovered = React.useState(false)
 
 	const strokeColor = if focused
-		then Color.Blue
-		elseif hovered then Color.BorderDark
-		else Color.Border
+		then color.Blue
+		elseif hovered then color.BorderDark
+		else color.Border
 
 	return e("Frame", {
-		LayoutOrder = props.layoutOrder,
+		LayoutOrder = props.LayoutOrder,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
@@ -34,20 +34,20 @@ const function TextInput(props: Props)
 			SortOrder = Enum.SortOrder.LayoutOrder,
 			Padding = UDim.new(0, 4),
 		}),
-		Label = props.label and e("TextLabel", {
+		Label = props.Label and e("TextLabel", {
 			LayoutOrder = 1,
 			Size = UDim2.new(1, 0, 0, 18),
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Semibold,
-			Text = props.label,
+			Text = props.Label,
 			TextSize = Theme.TextSize.Body,
-			TextColor3 = Color.Text,
+			TextColor3 = color.Text,
 			TextXAlignment = Enum.TextXAlignment.Left,
 		}),
 		Field = e("Frame", {
 			LayoutOrder = 2,
 			Size = UDim2.new(1, 0, 0, 32),
-			BackgroundColor3 = Color.Panel,
+			BackgroundColor3 = color.Panel,
 			BorderSizePixel = 0,
 
 			[React.Event.MouseEnter] = function()
@@ -71,11 +71,11 @@ const function TextInput(props: Props)
 				ClearTextOnFocus = false,
 				ClipsDescendants = true,
 				Font = Theme.Font.Regular,
-				Text = props.text,
-				PlaceholderText = props.placeholder or "",
-				PlaceholderColor3 = Color.Placeholder,
+				Text = props.Text,
+				PlaceholderText = props.Placeholder or "",
+				PlaceholderColor3 = color.Placeholder,
 				TextSize = Theme.TextSize.Body,
-				TextColor3 = Color.Text,
+				TextColor3 = color.Text,
 				TextXAlignment = Enum.TextXAlignment.Left,
 
 				[React.Event.Focused] = function()
@@ -83,29 +83,29 @@ const function TextInput(props: Props)
 				end,
 				[React.Event.FocusLost] = function(textBox: TextBox)
 					setFocused(false)
-					if props.onCommit then
-						const replacement = props.onCommit(textBox.Text)
+					if props.OnCommit then
+						const replacement = props.OnCommit(textBox.Text)
 						if replacement ~= nil and replacement ~= textBox.Text then
 							textBox.Text = replacement
 						end
 					end
 				end,
 				[React.Change.Text] = function(textBox: TextBox)
-					if props.onChange then
-						props.onChange(textBox.Text)
+					if props.OnChange then
+						props.OnChange(textBox.Text)
 					end
 				end,
 			}),
 		}),
-		Hint = props.hint and e("TextLabel", {
+		Hint = props.Hint and e("TextLabel", {
 			LayoutOrder = 3,
 			Size = UDim2.fromScale(1, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
 			Font = Theme.Font.Regular,
-			Text = props.hint,
+			Text = props.Hint,
 			TextSize = 13,
-			TextColor3 = Color.TextMuted,
+			TextColor3 = color.TextMuted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextWrapped = true,
 		}),
